@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  app02
+  
+  SAM Template for lambda golang 
+
+Parameters:
+  Env:
+    Type: String
+    Description: "Logical environment like dev, test, prod etc"
+    Default: dev
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  FeatureOneFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: app02/featureone/
+      Handler: handler
+      Runtime: go1.x
+      Tracing: Active
+      Environment:
+        Variables:
+          PARAM1: VALUE
+
+Outputs:
+  FeatureOneFunction:
+    Description: "Feature one function ARN"
+    Value: !GetAtt FeatureOneFunction.Arn
+  FeatureOneFunctionIamRole:
+    Description: "IAM Role created for feature one function"
+    Value: !GetAtt FeatureOneFunctionRole.Arn
